@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>2048 Card Merge</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500&family=Jost:wght@500;600;700&display=swap" rel="stylesheet"> 
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Customized Stylesheet -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        .mySlides {
+            display:none;
+            border-radius: 20px;
+            position: relative;
+            margin-left: 20px;
+        }
+    </style>
+
+
+</head>
+
+<body data-bs-spy="scroll" data-bs-target=".navbar" data-bs-offset="51">
+
+    
+      
+    <div class="container-xxl bg-white p-0">
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Navbar & Hero Start -->
+        <div class="container-xxl position-relative p-0" id="home">
+            
+            <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+                <a href="" class="navbar-brand p-0">
+                    <h1 class="m-0">2048 Card Merge</h1>
+                </a>    
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav mx-auto py-0">
+                        <a href="#home" class="nav-item nav-link active">Home</a>
+                        <a href="#about" class="nav-item nav-link">About</a>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="container-xxl bg-primary hero-header">
+                <div class="container px-lg-5">
+                    <div class="row g-5">
+                        <div class="col-lg-8 text-center text-lg-start">
+                            <img src="img/icon.png" alt="Italian Trulli" height="100px" width="100px">
+                            <h1 class="text-white mb-4 animated slideInDown">2048 Card Merge</h1>
+                            <p class="text-white pb-3 animated slideInDown"> Unity Game </p>
+                            <a href="" class="btn btn-primary-gradient py-sm-3 px-4 px-sm-5 rounded-pill me-3 animated slideInLeft">Download</a>
+                            <a href="" class="btn btn-secondary-gradient py-sm-3 px-4 px-sm-5 rounded-pill animated slideInRight">Play</a>
+                        </div>
+                        <div class="col-lg-4 d-flex justify-content-center justify-content-lg-end wow fadeInUp" data-wow-delay="0.3s">
+                         
+                            <video class="hader-video" controls autoplay>
+                                <source src="img/1010blockpuzzle.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                              </video>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+        <!-- Navbar & Hero End -->
+
+
+        <!-- About Start -->
+        <div class="container-xxl py-5" id="about">
+            <div class="container py-5 px-lg-5">
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-6">
+                        <div class="w3-content w3-display-container"  style="width: 380px" style="height:600px">
+                            <img class="mySlides" src="img/screenshot-1.png" height= "600px" width="340px">
+                            <img class="mySlides" src="img/screenshot-2.png" height= "600px" width="340px">
+                            <img class="mySlides" src="img/screenshot-3.png" height= "600px" width="340px">
+                            <img class="mySlides" src="img/screenshot-4.png" height= "600px" width="340px">
+                            <img class="mySlides" src="img/screenshot-5.png" height= "600px" width="340px">
+                            <img class="mySlides" src="img/screenshot-6.png" height= "600px" width="340px">
+                            <img class="mySlides" src="img/screenshot-7.png" height= "600px" width="340px">
+                            <img class="mySlides" src="img/screenshot-8.png" height= "600px" width="340px">
+                            <img class="mySlides" src="img/screenshot-9.png" height= "600px" width="340px">
+                            <img class="mySlides" src="img/screenshot-10.png" height= "600px" width="340px">
+                            <img class="mySlides" src="img/screenshot-11.png" height= "600px" width="340px">
+                            <img class="mySlides" src="img/screenshot-12.png" height= "600px" width="340px">
+                            <img class="mySlides" src="img/screenshot-13.png" height= "600px" width="340px">
+                            <img class="mySlides" src="img/screenshot-14.png" height= "600px" width="340px">
+
+                            <button class="w3-button w3-wight w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+                            <button class="w3-button w3-wight w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+                          </div>
+                    </div>
+                    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                        <h5 class="text-primary-gradient fw-medium">About Game</h5>
+                        <h1 class="mb-4">Fun Game</h1>
+                        <p class="mb-4">2048 Card Game is a Mathematical Game and Brain Game. </p>
+                        <p class="mb-4">Train your brain and develop your logic with this simple game that lets you combine Cards , build and destroy Cards by combine same numbers Card and test your logic with friends. Enjoy addicting brain training exercises with the power of 1010!</p>
+                        <div class="row g-4 mb-4">
+                            <div class="col-sm-6 wow fadeIn" data-wow-delay="0.5s">
+                                <div class="d-flex">
+                                    <i class="fa fa-cogs fa-2x text-primary-gradient flex-shrink-0 mt-1"></i>
+                                    <div class="ms-3">
+                                        <h2 class="mb-0" data-toggle="counter-up">1459</h2>
+                                        <p class="text-primary-gradient mb-0">Active Install</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+        <!-- About End -->
+
+
+    
+
+        <!-- Footer Start -->
+       <div class="container-fluid bg-primary text-light footer wow fadeIn" data-wow-delay="0.1s">
+            <div class="container py-5 px-lg-5">
+                <div class="row g-5">
+                   
+                    <div class="col-md-1 col-lg-5">
+                       
+                    </div>
+                    
+                    <div class="col-md-1 col-lg-5">
+                        <h4 class="text-white mb-4">Created By </h4>
+                        <p>(:   Niraj Italiya</p>
+                        <p><i class="fa fa-phone-alt me-3"></i>+91 8140810073</p>
+                        <p><i class="fa fa-envelope me-3"></i>nirajitaliya123@gmail.com</p>
+                        <div class="d-flex pt-2">
+                            <a class="btn btn-outline-light btn-social" href="https://github.com/NirajItaliya"><i class="fab fa-github"></i></a>
+                            <a class="btn btn-outline-light btn-social" href="http://wa.me/918140810073?text=Hi , I am (: Enter your Name :) "><i class="fab fa-whatsapp"></i></a>
+                            <a class="btn btn-outline-light btn-social" href="https://www.instagram.com/niraj._.italiya/"><i class="fab fa-instagram"></i></a>
+                            <a class="btn btn-outline-light btn-social" href="https://www.linkedin.com/in/niraj-italiya-55ab541b4/"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-md-1 col-lg-5">
+                       
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="container px-lg-5">
+                <div class="copyright">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-end">
+                            <div class="footer-menu">
+                                <a href="">Thank You</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-lg-square back-to-top pt-2"><i class="bi bi-arrow-up text-white"></i></a>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/counterup/counterup.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+
+    <script>
+        var slideIndex = 1;
+        showDivs(slideIndex);
+      
+        function plusDivs(n) {
+          showDivs(slideIndex += n);
+        }
+      
+        function showDivs(n) {
+          var i;
+          var x = document.getElementsByClassName("mySlides");
+          if (n > x.length) {slideIndex = 1}
+          if (n < 1) {slideIndex = x.length}
+          for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";  
+          }
+          x[slideIndex-1].style.display = "block";  
+        }
+        </script>
+      
+</body>
+
+</html>
