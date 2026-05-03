@@ -725,19 +725,19 @@ section {
   display: flex; align-items: center; gap: 14px; margin-bottom: 14px;
 }
 .exp-logo {
-  width: 56px; height: 56px; border-radius: 12px;
+  width: 64px; height: 64px; border-radius: 14px;
   display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; font-weight: 800; font-family: 'Fira Code', monospace;
-  color: #fff; font-size: 18px;
+  flex-shrink: 0;
+  background: #fff;
+  padding: 6px;
   box-shadow: 0 6px 18px rgba(0,0,0,.4);
   position: relative; overflow: hidden;
 }
-.exp-logo::after {
-  content:''; position:absolute; inset:0;
-  background: radial-gradient(circle at 30% 20%, rgba(255,255,255,.25), transparent 60%);
+.exp-logo img {
+  width: 100%; height: 100%; object-fit: contain; display: block;
 }
-.exp-logo.convozen { background: linear-gradient(135deg, #7c3aed, #4c1d95); }
-.exp-logo.drdo     { background: linear-gradient(135deg, #f59e0b, #b45309); }
+.exp-logo.convozen { background: #fff; }
+.exp-logo.drdo     { background: #fff; }
 .exp-head-text { flex: 1; min-width: 0; }
 
 /* ===== Education ===== */
@@ -769,19 +769,19 @@ section {
   display: flex; align-items: center; gap: 16px; margin-bottom: 14px;
 }
 .edu-logo {
-  width: 70px; height: 70px; border-radius: 50%;
+  width: 80px; height: 80px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; font-weight: 800; font-family: 'Fira Code', monospace;
-  color: #fff; font-size: 18px;
+  flex-shrink: 0;
+  background: #fff;
+  padding: 6px;
   position: relative; overflow: hidden;
   box-shadow: 0 8px 22px rgba(0,0,0,.4);
 }
-.edu-logo::after {
-  content:''; position:absolute; inset:0; border-radius: 50%;
-  background: radial-gradient(circle at 30% 20%, rgba(255,255,255,.3), transparent 60%);
+.edu-logo img {
+  width: 100%; height: 100%; object-fit: contain; display: block;
 }
-.edu-logo.daiict { background: linear-gradient(135deg, #1e40af, #06b6d4); }
-.edu-logo.gtu    { background: linear-gradient(135deg, #047857, #10b981); }
+.edu-logo.daiict { background: #fff; }
+.edu-logo.gtu    { background: #fff; }
 .edu-degree { font-size: 17px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
 .edu-school { color: var(--accent-2); font-size: 13px; font-weight: 600; }
 .edu-meta {
@@ -806,30 +806,149 @@ section {
   color: var(--accent-2);
 }
 
-/* ===== Skills ===== */
+/* ===== Skills (category cards) ===== */
+.skills-intro {
+  text-align: center;
+  max-width: 720px;
+  margin: -20px auto 40px;
+  color: var(--text-dim);
+  font-size: 16px;
+}
+.skills-intro strong {
+  background: linear-gradient(135deg, var(--accent-2), var(--accent-cyan));
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
 .skills-grid {
-  display:grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
-  gap: 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 22px;
 }
-.skill-card {
-  background: var(--card-bg); border: 1px solid var(--border);
-  border-radius: 12px; padding: 18px 14px; text-align:center;
-  backdrop-filter: blur(8px); transition: all .3s;
-  font-family: 'Fira Code', monospace; font-size: 13px;
-  position: relative; overflow: hidden;
+.skill-cat {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 26px 22px;
+  backdrop-filter: blur(14px);
+  overflow: hidden;
+  transition: transform .35s cubic-bezier(.2,.9,.3,1.4),
+              box-shadow .35s,
+              border-color .35s;
 }
-.skill-card::before {
-  content:''; position: absolute; inset: 0;
-  background: linear-gradient(135deg, transparent, rgba(167,139,250,0.15), transparent);
-  transform: translateX(-100%);
-  transition: transform .5s;
+.skill-cat::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--cat-grad, linear-gradient(90deg, var(--accent), var(--accent-2)));
+  opacity: 0.95;
 }
-.skill-card:hover {
-  border-color: var(--accent); transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(124,58,237,0.25);
+.skill-cat::after {
+  content: '';
+  position: absolute; inset: -1px;
+  border-radius: 18px;
+  padding: 1px;
+  background: var(--cat-grad, linear-gradient(135deg, var(--accent), var(--accent-2)));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  transition: opacity .35s;
+  pointer-events: none;
 }
-.skill-card:hover::before { transform: translateX(100%); }
-.skill-icon { font-size: 26px; margin-bottom: 8px; display: block; }
+.skill-cat:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px var(--cat-shadow, rgba(124,58,237,0.30));
+}
+.skill-cat:hover::after { opacity: 1; }
+
+.skill-cat-head {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 8px;
+}
+.skill-cat-icon {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--cat-grad, linear-gradient(135deg, var(--accent), var(--accent-2)));
+  font-size: 26px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px var(--cat-shadow, rgba(124,58,237,0.35));
+}
+.skill-cat-title {
+  font-size: 18px; font-weight: 800; color: var(--text);
+  letter-spacing: 0.2px;
+}
+.skill-cat-sub {
+  font-family: 'Fira Code', monospace; font-size: 11px;
+  color: var(--text-dim);
+  text-transform: uppercase; letter-spacing: 1.5px;
+  margin-top: 3px;
+}
+.skill-cat-desc {
+  font-size: 14px; color: var(--text-dim);
+  margin-bottom: 16px; line-height: 1.55;
+}
+.skill-pills {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.skill-pill {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.28);
+  border: 1px solid var(--border);
+  font-family: 'Fira Code', monospace;
+  font-size: 12px;
+  color: var(--text);
+  transition: transform .2s, background .25s, border-color .25s, color .25s;
+  cursor: default;
+}
+.skill-pill:hover {
+  transform: translateY(-2px) scale(1.04);
+  border-color: var(--cat-color, var(--accent-2));
+  background: rgba(255,255,255,0.06);
+  color: var(--cat-color, var(--accent-2));
+}
+.skill-pill .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--cat-color, var(--accent-2));
+  box-shadow: 0 0 6px var(--cat-color, var(--accent-2));
+}
+
+/* category color themes */
+.skill-cat.voice {
+  --cat-color: var(--accent-2);
+  --cat-grad: linear-gradient(135deg, #7c3aed, #a78bfa);
+  --cat-shadow: rgba(124,58,237,0.35);
+}
+.skill-cat.llm {
+  --cat-color: var(--accent-cyan);
+  --cat-grad: linear-gradient(135deg, #0891b2, #22d3ee);
+  --cat-shadow: rgba(34,211,238,0.30);
+}
+.skill-cat.lang {
+  --cat-color: var(--accent-pink);
+  --cat-grad: linear-gradient(135deg, #be185d, #ec4899);
+  --cat-shadow: rgba(236,72,153,0.30);
+}
+.skill-cat.mlops {
+  --cat-color: var(--accent-green);
+  --cat-grad: linear-gradient(135deg, #047857, #10b981);
+  --cat-shadow: rgba(16,185,129,0.28);
+}
+.skill-cat.backend {
+  --cat-color: var(--accent-amber);
+  --cat-grad: linear-gradient(135deg, #b45309, #f59e0b);
+  --cat-shadow: rgba(245,158,11,0.28);
+}
+.skill-cat.data {
+  --cat-color: #818cf8;
+  --cat-grad: linear-gradient(135deg, #4338ca, #818cf8);
+  --cat-shadow: rgba(129,140,248,0.30);
+}
 
 /* ===== Contact ===== */
 #contact { text-align: center; padding-bottom: 80px; }
@@ -898,7 +1017,7 @@ footer {
   <h2 class="hero-role">I build voice AI agents.</h2>
   <div class="tagline reveal">
     <span class="tagline-icon">∑</span>
-    <span class="tagline-text">Fight with <em>Entropy</em>.</span>
+    <span class="tagline-text">Fighting with <em>Entropy</em>..</span>
     <span class="tagline-formula">H(X) = −Σ p(x) log p(x)</span>
   </div>
   <div class="hero-typing" id="typing"></div>
@@ -1142,18 +1261,7 @@ footer {
     <div class="exp-card reveal">
       <div class="exp-head">
         <div class="exp-logo convozen" title="Convozen.ai">
-          <!-- stylized monogram: open "C" + voice waveform -->
-          <svg width="44" height="44" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-            <!-- open "C" arc -->
-            <path d="M44 18 A18 18 0 1 0 44 42"
-                  fill="none" stroke="white" stroke-width="4.5" stroke-linecap="round"/>
-            <!-- soundwave bars inside the C -->
-            <line x1="26" y1="26" x2="26" y2="34" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-            <line x1="32" y1="22" x2="32" y2="38" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-            <line x1="38" y1="26" x2="38" y2="34" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-            <!-- ".ai" dot accent -->
-            <circle cx="48" cy="46" r="2.5" fill="white"/>
-          </svg>
+          <img src="img/convozen.jpeg" alt="Convozen.ai logo" />
         </div>
         <div class="exp-head-text">
           <div class="exp-meta">DEC 2024 — PRESENT</div>
@@ -1173,16 +1281,7 @@ footer {
     <div class="exp-card reveal">
       <div class="exp-head">
         <div class="exp-logo drdo" title="DRDO">
-          <!-- stylized shield monogram with "DRDO" text -->
-          <svg width="44" height="44" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-            <path d="M30 5 L52 13 V32 C52 44 42 52 30 56 C18 52 8 44 8 32 V13 Z"
-                  fill="none" stroke="white" stroke-width="2.5" stroke-linejoin="round"/>
-            <text x="30" y="34" text-anchor="middle"
-                  font-family="Fira Code, monospace" font-size="11" font-weight="800"
-                  fill="white" letter-spacing="1">DRDO</text>
-            <line x1="14" y1="40" x2="46" y2="40"
-                  stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
-          </svg>
+          <img src="img/drdo.png" alt="DRDO logo" />
         </div>
         <div class="exp-head-text">
           <div class="exp-meta">2023 — 2024</div>
@@ -1209,18 +1308,7 @@ footer {
     <div class="edu-card reveal">
       <div class="edu-head">
         <div class="edu-logo daiict" title="DA-IICT Gandhinagar">
-          <!-- stylized circular monogram with "DA-IICT" text -->
-          <svg width="56" height="56" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="30" cy="30" r="27" fill="none" stroke="white" stroke-width="2.5"/>
-            <circle cx="30" cy="30" r="22" fill="none" stroke="white" stroke-width="1" opacity="0.55"/>
-            <text x="30" y="27" text-anchor="middle"
-                  font-family="Fira Code, monospace" font-size="11" font-weight="800"
-                  fill="white" letter-spacing="0.5">DA-IICT</text>
-            <line x1="16" y1="32" x2="44" y2="32" stroke="white" stroke-width="1" opacity="0.6"/>
-            <text x="30" y="42" text-anchor="middle"
-                  font-family="Inter, sans-serif" font-size="6" font-weight="600"
-                  fill="white" letter-spacing="1.5" opacity="0.85">GANDHINAGAR</text>
-          </svg>
+          <img src="img/daiict.png" alt="DA-IICT logo" />
         </div>
         <div>
           <div class="edu-degree">M.Tech · Information &amp; Communication Technology</div>
@@ -1239,21 +1327,7 @@ footer {
     <div class="edu-card reveal">
       <div class="edu-head">
         <div class="edu-logo gtu" title="Gujarat Technological University">
-          <!-- stylized hex monogram with "GTU" text -->
-          <svg width="56" height="56" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-            <polygon points="30,5 53,18 53,42 30,55 7,42 7,18"
-                     fill="none" stroke="white" stroke-width="2.5" stroke-linejoin="round"/>
-            <polygon points="30,12 47,21.5 47,38.5 30,48 13,38.5 13,21.5"
-                     fill="none" stroke="white" stroke-width="1" opacity="0.55"/>
-            <text x="30" y="34" text-anchor="middle"
-                  font-family="Fira Code, monospace" font-size="13" font-weight="800"
-                  fill="white" letter-spacing="1.5">GTU</text>
-            <line x1="18" y1="38" x2="42" y2="38"
-                  stroke="white" stroke-width="1" opacity="0.6"/>
-            <text x="30" y="45" text-anchor="middle"
-                  font-family="Inter, sans-serif" font-size="5" font-weight="600"
-                  fill="white" letter-spacing="1.2" opacity="0.85">GUJARAT TECH</text>
-          </svg>
+          <img src="img/gtu.png" alt="GTU logo" />
         </div>
         <div>
           <div class="edu-degree">B.Tech · Computer Engineering</div>
@@ -1274,19 +1348,131 @@ footer {
 <!-- ===== SKILLS ===== -->
 <section id="skills">
   <h2 class="section-title reveal"><span class="num">07.</span> Tech I Build With</h2>
+  <p class="skills-intro reveal">
+    The toolkit I reach for when shipping <strong>voice AI at production scale</strong> —
+    grouped by what each one actually does, not by buzzword.
+  </p>
+
   <div class="skills-grid">
-    <div class="skill-card reveal"><span class="skill-icon">🐍</span>Python</div>
-    <div class="skill-card reveal"><span class="skill-icon">🔥</span>PyTorch</div>
-    <div class="skill-card reveal"><span class="skill-icon">⚡</span>vLLM</div>
-    <div class="skill-card reveal"><span class="skill-icon">🚀</span>Triton</div>
-    <div class="skill-card reveal"><span class="skill-icon">🐳</span>Docker</div>
-    <div class="skill-card reveal"><span class="skill-icon">☸️</span>Kubernetes</div>
-    <div class="skill-card reveal"><span class="skill-icon">🎙️</span>STT / TTS</div>
-    <div class="skill-card reveal"><span class="skill-icon">🧠</span>LLM Serving</div>
-    <div class="skill-card reveal"><span class="skill-icon">📊</span>Grafana</div>
-    <div class="skill-card reveal"><span class="skill-icon">🔌</span>FastAPI</div>
-    <div class="skill-card reveal"><span class="skill-icon">🗄️</span>MongoDB</div>
-    <div class="skill-card reveal"><span class="skill-icon">⚙️</span>Redis</div>
+
+    <div class="skill-cat voice reveal">
+      <div class="skill-cat-head">
+        <div class="skill-cat-icon">🎙️</div>
+        <div>
+          <div class="skill-cat-title">Voice AI Stack</div>
+          <div class="skill-cat-sub">stt · tts · audio</div>
+        </div>
+      </div>
+      <p class="skill-cat-desc">End-to-end speech pipelines: streaming ASR, neural TTS, voice activity detection, low-latency telephony.</p>
+      <div class="skill-pills">
+        <span class="skill-pill"><span class="dot"></span>Conformer</span>
+        <span class="skill-pill"><span class="dot"></span>Whisper</span>
+        <span class="skill-pill"><span class="dot"></span>VITS</span>
+        <span class="skill-pill"><span class="dot"></span>WebRTC</span>
+        <span class="skill-pill"><span class="dot"></span>Exotel</span>
+        <span class="skill-pill"><span class="dot"></span>Twilio</span>
+      </div>
+    </div>
+
+    <div class="skill-cat llm reveal">
+      <div class="skill-cat-head">
+        <div class="skill-cat-icon">🧠</div>
+        <div>
+          <div class="skill-cat-title">LLM Engineering</div>
+          <div class="skill-cat-sub">serving · rag · agents</div>
+        </div>
+      </div>
+      <p class="skill-cat-desc">High-throughput LLM serving with sub-second first-token latency. Streaming, tool use, and RAG over private corpora.</p>
+      <div class="skill-pills">
+        <span class="skill-pill"><span class="dot"></span>vLLM</span>
+        <span class="skill-pill"><span class="dot"></span>Triton</span>
+        <span class="skill-pill"><span class="dot"></span>LangChain</span>
+        <span class="skill-pill"><span class="dot"></span>RAG</span>
+        <span class="skill-pill"><span class="dot"></span>HuggingFace</span>
+        <span class="skill-pill"><span class="dot"></span>OpenAI API</span>
+      </div>
+    </div>
+
+    <div class="skill-cat lang reveal">
+      <div class="skill-cat-head">
+        <div class="skill-cat-icon">💻</div>
+        <div>
+          <div class="skill-cat-title">Languages & ML</div>
+          <div class="skill-cat-sub">core · frameworks</div>
+        </div>
+      </div>
+      <p class="skill-cat-desc">The everyday languages and ML frameworks I write in. Python is home; PyTorch is the tool of choice.</p>
+      <div class="skill-pills">
+        <span class="skill-pill"><span class="dot"></span>Python</span>
+        <span class="skill-pill"><span class="dot"></span>PyTorch</span>
+        <span class="skill-pill"><span class="dot"></span>TensorFlow</span>
+        <span class="skill-pill"><span class="dot"></span>scikit-learn</span>
+        <span class="skill-pill"><span class="dot"></span>C++</span>
+        <span class="skill-pill"><span class="dot"></span>Bash</span>
+        <span class="skill-pill"><span class="dot"></span>SQL</span>
+      </div>
+    </div>
+
+    <div class="skill-cat mlops reveal">
+      <div class="skill-cat-head">
+        <div class="skill-cat-icon">☸️</div>
+        <div>
+          <div class="skill-cat-title">MLOps & Cloud</div>
+          <div class="skill-cat-sub">deploy · scale · observe</div>
+        </div>
+      </div>
+      <p class="skill-cat-desc">Containerized ML on Kubernetes with proper observability — metrics, traces, logs, and rollouts you can actually trust.</p>
+      <div class="skill-pills">
+        <span class="skill-pill"><span class="dot"></span>Docker</span>
+        <span class="skill-pill"><span class="dot"></span>Kubernetes</span>
+        <span class="skill-pill"><span class="dot"></span>GCP</span>
+        <span class="skill-pill"><span class="dot"></span>AWS</span>
+        <span class="skill-pill"><span class="dot"></span>Prometheus</span>
+        <span class="skill-pill"><span class="dot"></span>Grafana</span>
+        <span class="skill-pill"><span class="dot"></span>MLflow</span>
+        <span class="skill-pill"><span class="dot"></span>CI/CD</span>
+      </div>
+    </div>
+
+    <div class="skill-cat backend reveal">
+      <div class="skill-cat-head">
+        <div class="skill-cat-icon">⚡</div>
+        <div>
+          <div class="skill-cat-title">Backend & APIs</div>
+          <div class="skill-cat-sub">services · streaming</div>
+        </div>
+      </div>
+      <p class="skill-cat-desc">Async Python services, WebSocket streaming for live calls, message queues for the heavy stuff.</p>
+      <div class="skill-pills">
+        <span class="skill-pill"><span class="dot"></span>FastAPI</span>
+        <span class="skill-pill"><span class="dot"></span>Flask</span>
+        <span class="skill-pill"><span class="dot"></span>WebSocket</span>
+        <span class="skill-pill"><span class="dot"></span>REST</span>
+        <span class="skill-pill"><span class="dot"></span>GraphQL</span>
+        <span class="skill-pill"><span class="dot"></span>Kafka</span>
+        <span class="skill-pill"><span class="dot"></span>gRPC</span>
+      </div>
+    </div>
+
+    <div class="skill-cat data reveal">
+      <div class="skill-cat-head">
+        <div class="skill-cat-icon">🗄️</div>
+        <div>
+          <div class="skill-cat-title">Data & Storage</div>
+          <div class="skill-cat-sub">sql · nosql · vectors</div>
+        </div>
+      </div>
+      <p class="skill-cat-desc">From relational to vector. Picking the right datastore for the access pattern, not the trend.</p>
+      <div class="skill-pills">
+        <span class="skill-pill"><span class="dot"></span>PostgreSQL</span>
+        <span class="skill-pill"><span class="dot"></span>MongoDB</span>
+        <span class="skill-pill"><span class="dot"></span>Redis</span>
+        <span class="skill-pill"><span class="dot"></span>Elasticsearch</span>
+        <span class="skill-pill"><span class="dot"></span>Pinecone</span>
+        <span class="skill-pill"><span class="dot"></span>FAISS</span>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -1326,7 +1512,7 @@ document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 (function typing() {
   const el = document.getElementById('typing');
   const phrases = [
-    'Voice AI engineer',
+    'ML engineer',
     'STT → LLM → TTS pipelines',
     'Voicebot simulator builder',
     'LLM serving with vLLM + Triton',
@@ -1423,13 +1609,50 @@ document.querySelectorAll('[data-count]').forEach(el => counterIO.observe(el));
    Voicebot simulator
 ========================= */
 const dialog = [
-  { who: 'bot',  text: 'Hello! This is Riya from Convozen. Am I speaking with Mr. Sharma?' },
-  { who: 'user', text: 'Yes, that\'s me.' },
-  { who: 'bot',  text: 'Great. I\'m calling about your home loan EMI of ₹24,500 due on the 5th. Can I help you confirm the payment?' },
-  { who: 'user', text: 'I haven\'t paid yet, can I do it tomorrow?' },
-  { who: 'bot',  text: 'Absolutely. I\'ll send a payment link to your registered number. The grace period is 3 days, so tomorrow works.' },
-  { who: 'user', text: 'Perfect. Thanks Riya.' },
-  { who: 'bot',  text: 'You\'re welcome. Have a great day!' },
+  { who: 'bot', text: 'Hello! This is Ananya from TechNova. Am I speaking with Rahul Sharma?' },
+  { who: 'user', text: 'Yes, this is Rahul.' },
+
+  { who: 'bot', text: 'Great Rahul. Thanks for applying to the Machine Learning Engineer role. Is this a good time to talk?' },
+  { who: 'user', text: 'Yes, absolutely.' },
+
+  { who: 'bot', text: 'Perfect. To start, could you briefly introduce yourself and your background?' },
+  { who: 'user', text: 'Sure. I have around 3 years of experience in machine learning and backend development. I’ve worked on NLP systems, recommendation engines, and deployed models using Python and Docker.' },
+
+  { who: 'bot', text: 'That sounds good. Can you tell me about a recent ML project you worked on?' },
+  { who: 'user', text: 'Recently, I worked on a speech-to-text pipeline using a Conformer-based model. I optimized inference latency and deployed it using Triton Inference Server with GPU support.' },
+
+  { who: 'bot', text: 'Interesting. How did you handle scaling and real-time performance?' },
+  { who: 'user', text: 'We used a WebSocket-based architecture for real-time streaming and optimized batch sizes dynamically. Also used GPU instances like A100 for high throughput.' },
+
+  { who: 'bot', text: 'Nice. What challenges did you face during deployment?' },
+  { who: 'user', text: 'One major challenge was handling different audio formats and maintaining low latency. We also had to fine-tune memory usage in Triton to avoid bottlenecks.' },
+
+  { who: 'bot', text: 'Got it. Are you familiar with MLOps practices?' },
+  { who: 'user', text: 'Yes. I’ve worked with CI/CD pipelines, Dockerized deployments, model versioning, and monitoring using tools like Prometheus and Grafana.' },
+
+  { who: 'bot', text: 'Great. How comfortable are you with deep learning frameworks?' },
+  { who: 'user', text: 'I primarily use PyTorch, but I also have experience with TensorFlow. I’ve built and fine-tuned models for NLP and speech tasks.' },
+
+  { who: 'bot', text: 'Sounds solid. Do you have experience working with cloud platforms?' },
+  { who: 'user', text: 'Yes, I’ve worked with Google Cloud, especially Vertex AI and GCS for model storage and deployment pipelines.' },
+
+  { who: 'bot', text: 'Good to hear. What are you currently looking for in your next role?' },
+  { who: 'user', text: 'I’m looking for a role where I can work on large-scale ML systems, especially real-time AI applications, and grow in system design and optimization.' },
+
+  { who: 'bot', text: 'That aligns well with our role. Do you have any questions for us?' },
+  { who: 'user', text: 'Yes, could you tell me more about the team structure and the kind of ML problems I would be working on?' },
+
+  { who: 'bot', text: 'Sure. You’ll be part of a team working on conversational AI, including speech, NLP, and real-time inference systems. The focus is on scalability and production-grade ML.' },
+
+  { who: 'user', text: 'That sounds exciting.' },
+
+  { who: 'bot', text: 'Great. Final question—what is your notice period?' },
+  { who: 'user', text: 'It’s 30 days, but I can try to negotiate for an early release.' },
+
+  { who: 'bot', text: 'Perfect. Thanks Rahul, that’s all from my side. We’ll get back to you soon.' },
+  { who: 'user', text: 'Thank you. Looking forward to it.' },
+
+  { who: 'bot', text: 'Have a great day!' }
 ];
 const botActor   = document.getElementById('botActor');
 const userActor  = document.getElementById('userActor');
