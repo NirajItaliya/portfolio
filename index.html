@@ -152,6 +152,75 @@ section {
   font-size: 18px; margin-bottom: 30px; min-height: 32px;
   opacity:0; animation: fadeUp .8s .55s forwards;
 }
+
+/* ===== Tagline: Fight with Entropy ===== */
+.tagline {
+  display: inline-flex; align-items: center; gap: 14px;
+  margin: 18px 0 26px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: linear-gradient(135deg,
+    rgba(124,58,237,0.18),
+    rgba(34,211,238,0.12),
+    rgba(236,72,153,0.18));
+  border: 1px solid var(--accent-3);
+  backdrop-filter: blur(8px);
+  font-family: 'Fira Code', monospace;
+  position: relative;
+  opacity: 0;
+  animation: fadeUp .8s .5s forwards;
+  overflow: hidden;
+}
+.tagline::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg,
+    transparent, rgba(167,139,250,0.18), transparent);
+  transform: translateX(-100%);
+  animation: tagline-sweep 4s ease-in-out infinite;
+}
+@keyframes tagline-sweep {
+  0%   { transform: translateX(-100%); }
+  60%  { transform: translateX(100%); }
+  100% { transform: translateX(100%); }
+}
+.tagline-icon {
+  font-size: 26px; font-weight: 800;
+  background: linear-gradient(135deg, var(--accent-2), var(--accent-cyan));
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: tagline-pulse 2.4s ease-in-out infinite;
+  position: relative; z-index: 1;
+}
+@keyframes tagline-pulse {
+  0%,100% { transform: scale(1); filter: drop-shadow(0 0 4px rgba(167,139,250,.5)); }
+  50%     { transform: scale(1.15); filter: drop-shadow(0 0 14px rgba(34,211,238,.85)); }
+}
+.tagline-text {
+  font-size: 16px; font-weight: 700; color: var(--text);
+  letter-spacing: 0.5px; position: relative; z-index: 1;
+}
+.tagline-text em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--accent-pink), var(--accent-amber), var(--accent-2));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: tagline-shimmer 3.5s linear infinite;
+}
+@keyframes tagline-shimmer { to { background-position: 200% center; } }
+.tagline-formula {
+  font-size: 11px; color: var(--text-dim);
+  padding-left: 12px; border-left: 1px solid var(--border);
+  letter-spacing: 0.5px;
+  position: relative; z-index: 1;
+}
+@media (max-width: 600px) {
+  .tagline { flex-wrap: wrap; gap: 8px; padding: 10px 14px; }
+  .tagline-formula { display: none; }
+}
 .hero-typing::after {
   content: '▍'; color: var(--accent); animation: blink 1s step-end infinite;
 }
@@ -799,191 +868,6 @@ footer {
 
 /* ===== Selection ===== */
 ::selection { background: var(--accent); color: #fff; }
-
-/* ===== ML Engineer Background Game =====
-   Tokens float in the background. Content sits on top (z-index:2).
-   Tokens are clickable where they appear in margins / between cards. */
-nav, section, footer { position: relative; z-index: 2; }
-
-.game-token {
-  position: fixed;
-  z-index: 1;
-  width: 44px; height: 44px;
-  border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px; font-weight: 700;
-  cursor: pointer;
-  user-select: none;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  box-shadow: 0 4px 12px rgba(0,0,0,.25);
-  transition: transform .25s cubic-bezier(.2,.9,.3,1.4),
-              box-shadow .25s, opacity .25s, filter .25s;
-  pointer-events: auto;
-  will-change: transform, top, left;
-  color: #fff;
-  /* dim by default so background tokens never compete with content text */
-  opacity: 0.28;
-  filter: saturate(0.7);
-}
-.game-token::after {
-  content: attr(data-label);
-  position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%);
-  font-family: 'Fira Code', monospace; font-size: 9px;
-  color: var(--text-dim); white-space: nowrap;
-  letter-spacing: 1px; text-transform: uppercase;
-  opacity: 0;                   /* hidden until hover */
-  transition: opacity .25s;
-  pointer-events: none;
-}
-.game-token:hover {
-  opacity: 1;
-  filter: saturate(1.2);
-  transform: scale(1.25) rotate(-4deg);
-  box-shadow: 0 0 0 3px var(--accent-2), 0 12px 30px rgba(124,58,237,.55);
-  z-index: 3;                   /* lift above content while interacting */
-}
-.game-token:hover::after { opacity: .85; }
-.game-token.t-data     { background: linear-gradient(135deg, #4c1d95, #7c3aed); }
-.game-token.t-neuron   { background: linear-gradient(135deg, #0e7490, #22d3ee); }
-.game-token.t-gradient { background: linear-gradient(135deg, #be185d, #ec4899); }
-.game-token.t-loss     { background: linear-gradient(135deg, #047857, #10b981); }
-.game-token.t-deploy   { background: linear-gradient(135deg, #b45309, #f59e0b); }
-.game-token.t-model    {
-  background: linear-gradient(135deg, #fff, #a78bfa, #22d3ee);
-  color: #1a1a2e;
-  animation: rare-glow 1.4s ease-in-out infinite;
-}
-@keyframes rare-glow {
-  0%,100% { box-shadow: 0 0 0 2px rgba(167,139,250,.7), 0 0 30px rgba(167,139,250,.6); }
-  50%     { box-shadow: 0 0 0 4px rgba(34,211,238,.7),  0 0 50px rgba(34,211,238,.7); }
-}
-.game-token.popping {
-  animation: tokenPop .55s ease-out forwards;
-  pointer-events: none;
-}
-@keyframes tokenPop {
-  0%   { transform: scale(1); opacity: 1; }
-  50%  { transform: scale(1.6) rotate(15deg); opacity: 1; }
-  100% { transform: scale(0) rotate(45deg); opacity: 0; }
-}
-
-/* floating "+N" score text after click */
-.score-pop {
-  position: fixed; z-index: 9999;
-  font-family: 'Fira Code', monospace;
-  font-weight: 800; font-size: 22px;
-  color: var(--accent-2); pointer-events: none;
-  text-shadow: 0 0 10px rgba(167,139,250,.8);
-  animation: scoreFloat .9s ease-out forwards;
-}
-@keyframes scoreFloat {
-  0%   { opacity: 1; transform: translate(-50%, 0) scale(.6); }
-  20%  { transform: translate(-50%, -10px) scale(1.2); }
-  100% { opacity: 0; transform: translate(-50%, -60px) scale(1); }
-}
-
-/* burst particles */
-.burst-piece {
-  position: fixed; z-index: 9998; pointer-events: none;
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--accent-2);
-  animation: burstFly .7s ease-out forwards;
-}
-@keyframes burstFly {
-  0%   { opacity: 1; transform: translate(-50%,-50%) scale(1); }
-  100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(.3); }
-}
-
-/* HUD: score panel */
-.game-hud {
-  position: fixed; top: 78px; right: 18px; z-index: 90;
-  width: 240px;
-  background: var(--card-bg);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 14px;
-  backdrop-filter: blur(12px);
-  font-family: 'Fira Code', monospace;
-  box-shadow: var(--shadow);
-  transition: transform .3s, opacity .3s;
-}
-.game-hud.collapsed { transform: translateX(220px); }
-.game-hud-toggle {
-  position: absolute; top: 50%; left: -28px; transform: translateY(-50%);
-  width: 28px; height: 56px;
-  border-radius: 8px 0 0 8px;
-  border: 1px solid var(--border); border-right: none;
-  background: var(--card-bg); backdrop-filter: blur(12px);
-  cursor: pointer; color: var(--accent-2);
-  display:flex; align-items:center; justify-content:center;
-  font-size: 14px;
-}
-.hud-row {
-  display:flex; justify-content: space-between; align-items: center;
-  font-size: 12px; color: var(--text-dim); margin-bottom: 6px;
-}
-.hud-row .v { color: var(--accent-2); font-weight: 700; }
-.hud-rank {
-  margin-top: 8px; padding: 8px 10px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, var(--accent-3), var(--accent));
-  color: #fff; font-size: 12px; font-weight: 700;
-  text-align: center; letter-spacing: 1px;
-}
-.hud-progress {
-  margin-top: 8px; height: 6px; background: rgba(0,0,0,.4);
-  border-radius: 3px; overflow: hidden;
-}
-.hud-progress > div {
-  height: 100%;
-  background: linear-gradient(90deg, var(--accent), var(--accent-cyan));
-  width: 0%;
-  transition: width .4s ease;
-}
-.hud-combo {
-  margin-top: 8px; font-size: 11px; color: var(--accent-amber);
-  text-align: center; min-height: 14px;
-  text-shadow: 0 0 8px rgba(245,158,11,.5);
-}
-.hud-help {
-  margin-top: 8px; font-size: 10px; color: var(--text-dim);
-  text-align: center; line-height: 1.4;
-  border-top: 1px dashed var(--border); padding-top: 8px;
-}
-@media (max-width: 760px) {
-  .game-hud { width: 180px; top: 68px; right: 8px; padding: 10px; }
-}
-
-/* reward toast */
-.reward-toast {
-  position: fixed; left: 50%; top: 50%;
-  transform: translate(-50%, -50%) scale(.6);
-  z-index: 10000;
-  padding: 24px 36px;
-  background: linear-gradient(135deg, var(--bg-2), var(--bg-3));
-  border: 2px solid var(--accent-2);
-  border-radius: 18px;
-  text-align: center;
-  font-family: 'Fira Code', monospace;
-  box-shadow: 0 0 60px rgba(167,139,250,.6), 0 20px 60px rgba(0,0,0,.5);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity .35s ease, transform .35s cubic-bezier(.2,.9,.3,1.4);
-}
-.reward-toast.show {
-  opacity: 1; transform: translate(-50%, -50%) scale(1);
-}
-.reward-toast .rt-icon { font-size: 50px; margin-bottom: 8px; }
-.reward-toast .rt-title {
-  font-size: 18px; font-weight: 800;
-  background: linear-gradient(135deg, var(--accent-2), var(--accent-cyan));
-  -webkit-background-clip: text;
-          background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 4px; letter-spacing: 1px;
-}
-.reward-toast .rt-sub { font-size: 12px; color: var(--text-dim); }
 </style>
 </head>
 <body>
@@ -993,25 +877,6 @@ nav, section, footer { position: relative; z-index: 2; }
 <div class="bg-blob b2"></div>
 <div class="bg-blob b3"></div>
 <canvas id="particles"></canvas>
-
-<!-- ===== ML Engineer Background Game HUD ===== -->
-<div class="game-hud" id="gameHud">
-  <button class="game-hud-toggle" id="hudToggle" title="Hide / show">◀</button>
-  <div class="hud-row"><span>// score</span><span class="v" id="hudScore">0</span></div>
-  <div class="hud-row"><span>// combo</span><span class="v" id="hudComboMul">x1</span></div>
-  <div class="hud-row"><span>// caught</span><span class="v" id="hudCaught">0</span></div>
-  <div class="hud-rank" id="hudRank">📓 STUDENT</div>
-  <div class="hud-progress"><div id="hudBar"></div></div>
-  <div class="hud-combo" id="hudCombo">&nbsp;</div>
-  <div class="hud-help">Click floating ML tokens drifting in the background to score &amp; rank up.</div>
-</div>
-
-<!-- reward toast container (single reusable) -->
-<div class="reward-toast" id="rewardToast">
-  <div class="rt-icon" id="rtIcon">🎓</div>
-  <div class="rt-title" id="rtTitle">RANK UP!</div>
-  <div class="rt-sub" id="rtSub">Junior ML Engineer</div>
-</div>
 
 <nav>
   <div class="logo"><span class="logo-dot"></span>niraj.dev</div>
@@ -1031,6 +896,11 @@ nav, section, footer { position: relative; z-index: 2; }
   <div class="hero-tag">// hello, world</div>
   <h1 class="hero-name">Niraj Italiya.</h1>
   <h2 class="hero-role">I build voice AI agents.</h2>
+  <div class="tagline reveal">
+    <span class="tagline-icon">∑</span>
+    <span class="tagline-text">Fight with <em>Entropy</em>.</span>
+    <span class="tagline-formula">H(X) = −Σ p(x) log p(x)</span>
+  </div>
   <div class="hero-typing" id="typing"></div>
   <p class="hero-desc">
     Machine Learning Engineer at <strong style="color:var(--accent-2)">NoBroker (Convozen.ai)</strong>.
@@ -1272,12 +1142,17 @@ nav, section, footer { position: relative; z-index: 2; }
     <div class="exp-card reveal">
       <div class="exp-head">
         <div class="exp-logo convozen" title="Convozen.ai">
-          <!-- stylized Convozen mic+wave logo -->
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="9" y="3" width="6" height="11" rx="3"/>
-            <path d="M5 11a7 7 0 0 0 14 0"/>
-            <path d="M12 18v3"/>
-            <path d="M3 14c1 .5 2 .5 3 0M18 14c1 .5 2 .5 3 0" stroke-dasharray="2 2"/>
+          <!-- stylized monogram: open "C" + voice waveform -->
+          <svg width="44" height="44" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+            <!-- open "C" arc -->
+            <path d="M44 18 A18 18 0 1 0 44 42"
+                  fill="none" stroke="white" stroke-width="4.5" stroke-linecap="round"/>
+            <!-- soundwave bars inside the C -->
+            <line x1="26" y1="26" x2="26" y2="34" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="32" y1="22" x2="32" y2="38" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="38" y1="26" x2="38" y2="34" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- ".ai" dot accent -->
+            <circle cx="48" cy="46" r="2.5" fill="white"/>
           </svg>
         </div>
         <div class="exp-head-text">
@@ -1298,10 +1173,15 @@ nav, section, footer { position: relative; z-index: 2; }
     <div class="exp-card reveal">
       <div class="exp-head">
         <div class="exp-logo drdo" title="DRDO">
-          <!-- stylized DRDO shield -->
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2L4 5v7c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V5l-8-3z"/>
-            <path d="M9 12l2 2 4-4"/>
+          <!-- stylized shield monogram with "DRDO" text -->
+          <svg width="44" height="44" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+            <path d="M30 5 L52 13 V32 C52 44 42 52 30 56 C18 52 8 44 8 32 V13 Z"
+                  fill="none" stroke="white" stroke-width="2.5" stroke-linejoin="round"/>
+            <text x="30" y="34" text-anchor="middle"
+                  font-family="Fira Code, monospace" font-size="11" font-weight="800"
+                  fill="white" letter-spacing="1">DRDO</text>
+            <line x1="14" y1="40" x2="46" y2="40"
+                  stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
           </svg>
         </div>
         <div class="exp-head-text">
@@ -1329,12 +1209,17 @@ nav, section, footer { position: relative; z-index: 2; }
     <div class="edu-card reveal">
       <div class="edu-head">
         <div class="edu-logo daiict" title="DA-IICT Gandhinagar">
-          <!-- DA-IICT stylized monogram -->
-          <svg width="40" height="40" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="30" cy="30" r="26" fill="none" stroke="white" stroke-width="2"/>
-            <text x="30" y="36" text-anchor="middle" font-family="Fira Code, monospace"
-                  font-size="16" font-weight="800" fill="white">DA</text>
-            <path d="M14 44 L46 44" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <!-- stylized circular monogram with "DA-IICT" text -->
+          <svg width="56" height="56" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="30" cy="30" r="27" fill="none" stroke="white" stroke-width="2.5"/>
+            <circle cx="30" cy="30" r="22" fill="none" stroke="white" stroke-width="1" opacity="0.55"/>
+            <text x="30" y="27" text-anchor="middle"
+                  font-family="Fira Code, monospace" font-size="11" font-weight="800"
+                  fill="white" letter-spacing="0.5">DA-IICT</text>
+            <line x1="16" y1="32" x2="44" y2="32" stroke="white" stroke-width="1" opacity="0.6"/>
+            <text x="30" y="42" text-anchor="middle"
+                  font-family="Inter, sans-serif" font-size="6" font-weight="600"
+                  fill="white" letter-spacing="1.5" opacity="0.85">GANDHINAGAR</text>
           </svg>
         </div>
         <div>
@@ -1354,12 +1239,20 @@ nav, section, footer { position: relative; z-index: 2; }
     <div class="edu-card reveal">
       <div class="edu-head">
         <div class="edu-logo gtu" title="Gujarat Technological University">
-          <!-- GTU stylized monogram -->
-          <svg width="40" height="40" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-            <polygon points="30,6 54,20 54,40 30,54 6,40 6,20"
-                     fill="none" stroke="white" stroke-width="2"/>
-            <text x="30" y="36" text-anchor="middle" font-family="Fira Code, monospace"
-                  font-size="14" font-weight="800" fill="white">GTU</text>
+          <!-- stylized hex monogram with "GTU" text -->
+          <svg width="56" height="56" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="30,5 53,18 53,42 30,55 7,42 7,18"
+                     fill="none" stroke="white" stroke-width="2.5" stroke-linejoin="round"/>
+            <polygon points="30,12 47,21.5 47,38.5 30,48 13,38.5 13,21.5"
+                     fill="none" stroke="white" stroke-width="1" opacity="0.55"/>
+            <text x="30" y="34" text-anchor="middle"
+                  font-family="Fira Code, monospace" font-size="13" font-weight="800"
+                  fill="white" letter-spacing="1.5">GTU</text>
+            <line x1="18" y1="38" x2="42" y2="38"
+                  stroke="white" stroke-width="1" opacity="0.6"/>
+            <text x="30" y="45" text-anchor="middle"
+                  font-family="Inter, sans-serif" font-size="5" font-weight="600"
+                  fill="white" letter-spacing="1.2" opacity="0.85">GUJARAT TECH</text>
           </svg>
         </div>
         <div>
@@ -1693,233 +1586,6 @@ function liveWaveform(canvasId, color) {
 }
 liveWaveform('liveWave', '#a78bfa');
 liveWaveform('sentLine', '#22d3ee');
-
-/* =========================
-   ML ENGINEER BACKGROUND GAME
-   Click floating tokens (data, neurons, gradients, deployments...) to score
-   and unlock ranks: Student → Intern → Junior → Mid → Senior → Staff → Principal
-========================= */
-(function mlGame() {
-  const TOKEN_TYPES = [
-    { cls: 't-data',     icon: '📦', label: 'data',      pts: 1,  weight: 50 },
-    { cls: 't-neuron',   icon: '🧠', label: 'neuron',    pts: 5,  weight: 28 },
-    { cls: 't-gradient', icon: '∇',  label: 'gradient',  pts: 10, weight: 14 },
-    { cls: 't-loss',     icon: '📉', label: 'loss-↓',    pts: 15, weight: 5 },
-    { cls: 't-deploy',   icon: '🚀', label: 'deploy',    pts: 25, weight: 2 },
-    { cls: 't-model',    icon: '💎', label: 'pretrained',pts: 50, weight: 1 },
-  ];
-  const RANKS = [
-    { score: 0,    icon: '📓', name: 'STUDENT',         sub: 'reading the docs' },
-    { score: 25,   icon: '🎓', name: 'INTERN',          sub: 'hello, world.py' },
-    { score: 80,   icon: '👨‍💻', name: 'JUNIOR ML ENG',   sub: 'shipped your first model' },
-    { score: 200,  icon: '⚡', name: 'MID ML ENG',      sub: 'tuning hyperparams in your sleep' },
-    { score: 400,  icon: '🧠', name: 'SENIOR ML ENG',   sub: '500K calls / day, no sweat' },
-    { score: 800,  icon: '🏆', name: 'STAFF ML ENG',    sub: 'you set the latency SLOs' },
-    { score: 1500, icon: '💎', name: 'PRINCIPAL ML ENG',sub: 'speech-AI legend status' },
-  ];
-  // weighted picker
-  const totalWeight = TOKEN_TYPES.reduce((a, t) => a + t.weight, 0);
-  function pickType() {
-    let r = Math.random() * totalWeight;
-    for (const t of TOKEN_TYPES) { if ((r -= t.weight) <= 0) return t; }
-    return TOKEN_TYPES[0];
-  }
-  function rankFor(score) {
-    let r = RANKS[0];
-    for (const x of RANKS) if (score >= x.score) r = x;
-    return r;
-  }
-  function nextRankProgress(score) {
-    const cur = rankFor(score);
-    const idx = RANKS.indexOf(cur);
-    const next = RANKS[idx + 1];
-    if (!next) return 100;
-    return Math.min(100, ((score - cur.score) / (next.score - cur.score)) * 100);
-  }
-
-  const state = {
-    score: 0, caught: 0,
-    combo: 0, comboMul: 1, lastClick: 0,
-    rankIdx: 0,
-    tokens: [],
-  };
-
-  const hudScore   = document.getElementById('hudScore');
-  const hudCaught  = document.getElementById('hudCaught');
-  const hudRank    = document.getElementById('hudRank');
-  const hudBar     = document.getElementById('hudBar');
-  const hudCombo   = document.getElementById('hudCombo');
-  const hudComboMul= document.getElementById('hudComboMul');
-  const toast      = document.getElementById('rewardToast');
-  const rtIcon     = document.getElementById('rtIcon');
-  const rtTitle    = document.getElementById('rtTitle');
-  const rtSub      = document.getElementById('rtSub');
-
-  // collapse / expand HUD
-  document.getElementById('hudToggle').addEventListener('click', () => {
-    const hud = document.getElementById('gameHud');
-    hud.classList.toggle('collapsed');
-    document.getElementById('hudToggle').textContent =
-      hud.classList.contains('collapsed') ? '▶' : '◀';
-  });
-
-  function refreshHud() {
-    hudScore.textContent    = state.score;
-    hudCaught.textContent   = state.caught;
-    hudComboMul.textContent = 'x' + state.comboMul;
-    const rank = rankFor(state.score);
-    hudRank.textContent     = `${rank.icon} ${rank.name}`;
-    hudBar.style.width      = nextRankProgress(state.score) + '%';
-  }
-
-  function showReward(icon, title, sub) {
-    rtIcon.textContent  = icon;
-    rtTitle.textContent = title;
-    rtSub.textContent   = sub;
-    toast.classList.add('show');
-    clearTimeout(showReward._t);
-    showReward._t = setTimeout(() => toast.classList.remove('show'), 1800);
-  }
-
-  function spawnToken() {
-    if (state.tokens.length > 4) return; // cap on screen — keeps text readable
-    const type = pickType();
-    const el = document.createElement('div');
-    el.className = 'game-token ' + type.cls;
-    el.dataset.label = `${type.label} +${type.pts}`;
-    el.textContent = type.icon;
-
-    const margin = 20;
-    const W = window.innerWidth, H = window.innerHeight;
-    const x = margin + Math.random() * (W - 56 - margin * 2);
-    const y = margin + 80 + Math.random() * (H - 56 - margin * 2 - 80);
-
-    el.style.left = x + 'px';
-    el.style.top  = y + 'px';
-
-    const tok = {
-      el, type,
-      x, y,
-      vx: (Math.random() - 0.5) * 0.6,
-      vy: (Math.random() - 0.5) * 0.6,
-      born: performance.now(),
-      ttl: 8000 + Math.random() * 5000,
-    };
-    state.tokens.push(tok);
-
-    el.addEventListener('click', (e) => catchToken(tok, e.clientX, e.clientY));
-    document.body.appendChild(el);
-  }
-
-  function catchToken(tok, px, py) {
-    if (tok.dead) return;
-    tok.dead = true;
-
-    // combo: clicks within 1.4s extend combo
-    const now = performance.now();
-    if (now - state.lastClick < 1400) {
-      state.combo++;
-      state.comboMul = Math.min(5, 1 + Math.floor(state.combo / 3));
-    } else {
-      state.combo = 1; state.comboMul = 1;
-    }
-    state.lastClick = now;
-
-    const gained = tok.type.pts * state.comboMul;
-    const prevRank = rankFor(state.score);
-    state.score += gained;
-    state.caught++;
-    const newRank = rankFor(state.score);
-
-    // float "+N"
-    const sp = document.createElement('div');
-    sp.className = 'score-pop';
-    sp.textContent = '+' + gained + (state.comboMul > 1 ? ` ×${state.comboMul}` : '');
-    sp.style.left = px + 'px';
-    sp.style.top  = py + 'px';
-    document.body.appendChild(sp);
-    setTimeout(() => sp.remove(), 900);
-
-    // particle burst
-    burst(px, py, tok.type.cls === 't-model' ? 18 : 8);
-
-    // pop the token
-    tok.el.classList.add('popping');
-    setTimeout(() => tok.el.remove(), 600);
-    state.tokens = state.tokens.filter(t => t !== tok);
-
-    // combo banner
-    if (state.combo > 1) {
-      hudCombo.textContent = `🔥 ${state.combo} combo${state.comboMul > 1 ? ' · x' + state.comboMul : ''}`;
-      clearTimeout(catchToken._cb);
-      catchToken._cb = setTimeout(() => hudCombo.innerHTML = '&nbsp;', 1500);
-    }
-
-    // rank-up reward
-    if (newRank !== prevRank) {
-      showReward(newRank.icon, 'RANK UP — ' + newRank.name, newRank.sub);
-    } else if (tok.type.cls === 't-model') {
-      showReward('💎', 'PRETRAINED!', '+50 — rare drop');
-    } else if (state.combo === 5) {
-      showReward('🔥', 'COMBO x5!', 'on fire');
-    } else if (state.caught === 1) {
-      showReward('✨', 'FIRST CATCH', 'you\'re on the leaderboard');
-    } else if (state.caught === 50) {
-      showReward('📊', '50 TOKENS', 'enough for one mini-batch');
-    } else if (state.caught === 100) {
-      showReward('🧪', '100 TOKENS', 'full epoch unlocked');
-    }
-
-    refreshHud();
-  }
-
-  function burst(x, y, count) {
-    const colors = ['#a78bfa', '#22d3ee', '#ec4899', '#10b981', '#f59e0b'];
-    for (let i = 0; i < count; i++) {
-      const p = document.createElement('div');
-      p.className = 'burst-piece';
-      p.style.left = x + 'px';
-      p.style.top  = y + 'px';
-      p.style.background = colors[i % colors.length];
-      const ang = (Math.PI * 2 * i) / count + Math.random() * 0.3;
-      const dist = 50 + Math.random() * 50;
-      p.style.setProperty('--tx', Math.cos(ang) * dist + 'px');
-      p.style.setProperty('--ty', Math.sin(ang) * dist + 'px');
-      document.body.appendChild(p);
-      setTimeout(() => p.remove(), 750);
-    }
-  }
-
-  // game loop: drift tokens, expire after ttl
-  function loop() {
-    const W = window.innerWidth, H = window.innerHeight;
-    const now = performance.now();
-    for (const t of state.tokens.slice()) {
-      if (t.dead) continue;
-      t.x += t.vx;
-      t.y += t.vy;
-      if (t.x < 10 || t.x > W - 66) t.vx *= -1;
-      if (t.y < 80 || t.y > H - 66) t.vy *= -1;
-      t.el.style.left = t.x + 'px';
-      t.el.style.top  = t.y + 'px';
-      if (now - t.born > t.ttl) {
-        t.dead = true;
-        t.el.classList.add('popping');
-        setTimeout(() => t.el.remove(), 600);
-        state.tokens = state.tokens.filter(x => x !== t);
-      }
-    }
-    requestAnimationFrame(loop);
-  }
-  loop();
-
-  // spawn tokens periodically — slower so they don't crowd the page
-  setInterval(spawnToken, 1800);
-  // seed a couple right away
-  for (let i = 0; i < 2; i++) setTimeout(spawnToken, i * 400);
-
-  refreshHud();
-})();
 </script>
 
 </body>
