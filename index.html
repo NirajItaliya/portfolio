@@ -651,6 +651,92 @@ section {
   color: var(--accent-2);
 }
 
+/* exp card with logo header */
+.exp-head {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 14px;
+}
+.exp-logo {
+  width: 56px; height: 56px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-weight: 800; font-family: 'Fira Code', monospace;
+  color: #fff; font-size: 18px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.4);
+  position: relative; overflow: hidden;
+}
+.exp-logo::after {
+  content:''; position:absolute; inset:0;
+  background: radial-gradient(circle at 30% 20%, rgba(255,255,255,.25), transparent 60%);
+}
+.exp-logo.convozen { background: linear-gradient(135deg, #7c3aed, #4c1d95); }
+.exp-logo.drdo     { background: linear-gradient(135deg, #f59e0b, #b45309); }
+.exp-head-text { flex: 1; min-width: 0; }
+
+/* ===== Education ===== */
+.edu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+.edu-card {
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 16px; padding: 24px;
+  backdrop-filter: blur(8px);
+  position: relative; overflow: hidden;
+  transition: transform .3s, border-color .3s, box-shadow .3s;
+}
+.edu-card::before {
+  content:''; position: absolute; top:0; left:0; right:0; height:3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-cyan), var(--accent-pink));
+  background-size: 200% 100%;
+  animation: eduStripe 4s linear infinite;
+}
+@keyframes eduStripe { to { background-position: -200% 0; } }
+.edu-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent);
+  box-shadow: 0 16px 40px rgba(124,58,237,.25);
+}
+.edu-head {
+  display: flex; align-items: center; gap: 16px; margin-bottom: 14px;
+}
+.edu-logo {
+  width: 70px; height: 70px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-weight: 800; font-family: 'Fira Code', monospace;
+  color: #fff; font-size: 18px;
+  position: relative; overflow: hidden;
+  box-shadow: 0 8px 22px rgba(0,0,0,.4);
+}
+.edu-logo::after {
+  content:''; position:absolute; inset:0; border-radius: 50%;
+  background: radial-gradient(circle at 30% 20%, rgba(255,255,255,.3), transparent 60%);
+}
+.edu-logo.daiict { background: linear-gradient(135deg, #1e40af, #06b6d4); }
+.edu-logo.gtu    { background: linear-gradient(135deg, #047857, #10b981); }
+.edu-degree { font-size: 17px; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+.edu-school { color: var(--accent-2); font-size: 13px; font-weight: 600; }
+.edu-meta {
+  font-family: 'Fira Code', monospace; font-size: 11px;
+  color: var(--text-dim); margin-bottom: 12px; letter-spacing: 1px;
+}
+.edu-cpi {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px; border-radius: 8px;
+  background: rgba(124,58,237,.15); border: 1px solid var(--accent-3);
+  font-family: 'Fira Code', monospace; font-size: 13px; color: var(--accent-2);
+  margin-bottom: 12px;
+}
+.edu-cpi strong { color: var(--accent-cyan); }
+.edu-list { list-style: none; }
+.edu-list li {
+  position: relative; padding-left: 20px; margin-bottom: 6px;
+  color: var(--text-dim); font-size: 13px;
+}
+.edu-list li::before {
+  content: '▸'; position: absolute; left: 4px;
+  color: var(--accent-2);
+}
+
 /* ===== Skills ===== */
 .skills-grid {
   display:grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
@@ -722,33 +808,42 @@ nav, section, footer { position: relative; z-index: 2; }
 .game-token {
   position: fixed;
   z-index: 1;
-  width: 56px; height: 56px;
-  border-radius: 14px;
+  width: 44px; height: 44px;
+  border-radius: 12px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 24px; font-weight: 700;
+  font-size: 20px; font-weight: 700;
   cursor: pointer;
   user-select: none;
   background: var(--card-bg);
   border: 1px solid var(--border);
-  backdrop-filter: blur(6px);
-  box-shadow: 0 8px 24px rgba(0,0,0,.35);
-  transition: transform .2s cubic-bezier(.2,.9,.3,1.4), box-shadow .2s;
+  box-shadow: 0 4px 12px rgba(0,0,0,.25);
+  transition: transform .25s cubic-bezier(.2,.9,.3,1.4),
+              box-shadow .25s, opacity .25s, filter .25s;
   pointer-events: auto;
   will-change: transform, top, left;
   color: #fff;
+  /* dim by default so background tokens never compete with content text */
+  opacity: 0.28;
+  filter: saturate(0.7);
 }
 .game-token::after {
   content: attr(data-label);
-  position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%);
+  position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%);
   font-family: 'Fira Code', monospace; font-size: 9px;
   color: var(--text-dim); white-space: nowrap;
   letter-spacing: 1px; text-transform: uppercase;
-  opacity: .7;
+  opacity: 0;                   /* hidden until hover */
+  transition: opacity .25s;
+  pointer-events: none;
 }
 .game-token:hover {
-  transform: scale(1.18) rotate(-4deg);
-  box-shadow: 0 0 0 3px var(--accent-2), 0 12px 30px rgba(124,58,237,.5);
+  opacity: 1;
+  filter: saturate(1.2);
+  transform: scale(1.25) rotate(-4deg);
+  box-shadow: 0 0 0 3px var(--accent-2), 0 12px 30px rgba(124,58,237,.55);
+  z-index: 3;                   /* lift above content while interacting */
 }
+.game-token:hover::after { opacity: .85; }
 .game-token.t-data     { background: linear-gradient(135deg, #4c1d95, #7c3aed); }
 .game-token.t-neuron   { background: linear-gradient(135deg, #0e7490, #22d3ee); }
 .game-token.t-gradient { background: linear-gradient(135deg, #be185d, #ec4899); }
@@ -926,7 +1021,8 @@ nav, section, footer { position: relative; z-index: 2; }
     <a href="#pipeline"><span class="num">03.</span>Pipeline</a>
     <a href="#analytics"><span class="num">04.</span>Analytics</a>
     <a href="#experience"><span class="num">05.</span>Experience</a>
-    <a href="#contact"><span class="num">06.</span>Contact</a>
+    <a href="#education"><span class="num">06.</span>Education</a>
+    <a href="#contact"><span class="num">07.</span>Contact</a>
   </div>
 </nav>
 
@@ -1174,9 +1270,22 @@ nav, section, footer { position: relative; z-index: 2; }
   <h2 class="section-title reveal"><span class="num">05.</span> Experience</h2>
   <div class="timeline">
     <div class="exp-card reveal">
-      <div class="exp-meta">DEC 2024 — PRESENT</div>
-      <div class="exp-role">Machine Learning Engineer</div>
-      <div class="exp-company">NoBroker · Convozen.ai</div>
+      <div class="exp-head">
+        <div class="exp-logo convozen" title="Convozen.ai">
+          <!-- stylized Convozen mic+wave logo -->
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="3" width="6" height="11" rx="3"/>
+            <path d="M5 11a7 7 0 0 0 14 0"/>
+            <path d="M12 18v3"/>
+            <path d="M3 14c1 .5 2 .5 3 0M18 14c1 .5 2 .5 3 0" stroke-dasharray="2 2"/>
+          </svg>
+        </div>
+        <div class="exp-head-text">
+          <div class="exp-meta">DEC 2024 — PRESENT</div>
+          <div class="exp-role">Machine Learning Engineer</div>
+          <div class="exp-company">NoBroker · Convozen.ai</div>
+        </div>
+      </div>
       <ul class="exp-list">
         <li>Deployed end-to-end conversational AI voicebot pipelines (STT → LLM → TTS) on Kubernetes</li>
         <li>Built the <strong>voicebot simulator</strong> for stress testing and replay — agent vs. simulated customer at scale</li>
@@ -1187,23 +1296,83 @@ nav, section, footer { position: relative; z-index: 2; }
     </div>
 
     <div class="exp-card reveal">
-      <div class="exp-meta">2023 — 2024</div>
-      <div class="exp-role">Research Intern</div>
-      <div class="exp-company">DRDO · Protocol Security</div>
+      <div class="exp-head">
+        <div class="exp-logo drdo" title="DRDO">
+          <!-- stylized DRDO shield -->
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L4 5v7c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V5l-8-3z"/>
+            <path d="M9 12l2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="exp-head-text">
+          <div class="exp-meta">2023 — 2024</div>
+          <div class="exp-role">Research Intern</div>
+          <div class="exp-company">DRDO · Protocol Security</div>
+        </div>
+      </div>
       <ul class="exp-list">
         <li>Built the first publicly-available client-side state-machine inference tool for IETF QUIC</li>
         <li>Disclosed 2 connection-migration vulnerabilities</li>
         <li>Authored internal protocol-fuzzing utilities adopted by the security team</li>
       </ul>
     </div>
+  </div>
+</section>
 
-    <div class="exp-card reveal">
-      <div class="exp-meta">2022 — 2024</div>
-      <div class="exp-role">M.Tech, Information &amp; Communication Technology</div>
-      <div class="exp-company">DA-IICT Gandhinagar · CPI 8.9</div>
-      <ul class="exp-list">
-        <li>Specialized in ML systems and protocol security</li>
-        <li>Thesis: state-machine inference for modern transport protocols</li>
+<!-- ===== EDUCATION ===== -->
+<section id="education">
+  <h2 class="section-title reveal"><span class="num">06.</span> Education</h2>
+  <p class="reveal" style="color:var(--text-dim); max-width:720px; margin-bottom:30px;">
+    Where I learned the math behind the models — and the systems behind the math.
+  </p>
+  <div class="edu-grid">
+    <div class="edu-card reveal">
+      <div class="edu-head">
+        <div class="edu-logo daiict" title="DA-IICT Gandhinagar">
+          <!-- DA-IICT stylized monogram -->
+          <svg width="40" height="40" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="30" cy="30" r="26" fill="none" stroke="white" stroke-width="2"/>
+            <text x="30" y="36" text-anchor="middle" font-family="Fira Code, monospace"
+                  font-size="16" font-weight="800" fill="white">DA</text>
+            <path d="M14 44 L46 44" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="edu-degree">M.Tech · Information &amp; Communication Technology</div>
+          <div class="edu-school">DA-IICT Gandhinagar</div>
+        </div>
+      </div>
+      <div class="edu-meta">2022 — 2024</div>
+      <div class="edu-cpi">📈 CPI <strong>8.90</strong> / 10</div>
+      <ul class="edu-list">
+        <li>Specialized in ML systems &amp; protocol security</li>
+        <li>Thesis: state-machine inference for modern transport protocols (QUIC)</li>
+        <li>Published research on connection-migration vulnerabilities</li>
+      </ul>
+    </div>
+
+    <div class="edu-card reveal">
+      <div class="edu-head">
+        <div class="edu-logo gtu" title="Gujarat Technological University">
+          <!-- GTU stylized monogram -->
+          <svg width="40" height="40" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="30,6 54,20 54,40 30,54 6,40 6,20"
+                     fill="none" stroke="white" stroke-width="2"/>
+            <text x="30" y="36" text-anchor="middle" font-family="Fira Code, monospace"
+                  font-size="14" font-weight="800" fill="white">GTU</text>
+          </svg>
+        </div>
+        <div>
+          <div class="edu-degree">B.Tech · Computer Engineering</div>
+          <div class="edu-school">Gujarat Technological University</div>
+        </div>
+      </div>
+      <div class="edu-meta">2018 — 2022</div>
+      <div class="edu-cpi">📈 CPI <strong>8.74</strong> / 10</div>
+      <ul class="edu-list">
+        <li>Core CS — algorithms, systems, networks, databases</li>
+        <li>Capstone in applied ML / NLP</li>
+        <li>Top 5% of cohort</li>
       </ul>
     </div>
   </div>
@@ -1211,7 +1380,7 @@ nav, section, footer { position: relative; z-index: 2; }
 
 <!-- ===== SKILLS ===== -->
 <section id="skills">
-  <h2 class="section-title reveal"><span class="num">06.</span> Tech I Build With</h2>
+  <h2 class="section-title reveal"><span class="num">07.</span> Tech I Build With</h2>
   <div class="skills-grid">
     <div class="skill-card reveal"><span class="skill-icon">🐍</span>Python</div>
     <div class="skill-card reveal"><span class="skill-icon">🔥</span>PyTorch</div>
@@ -1230,7 +1399,7 @@ nav, section, footer { position: relative; z-index: 2; }
 
 <!-- ===== CONTACT ===== -->
 <section id="contact">
-  <h2 class="section-title reveal" style="justify-content:center;"><span class="num">07.</span> Get In Touch</h2>
+  <h2 class="section-title reveal" style="justify-content:center;"><span class="num">08.</span> Get In Touch</h2>
   <p class="contact-text reveal">
     I'm always up for a chat about voice AI, LLM serving, or building things that actually scale.
     Drop a line — I read everything.
@@ -1613,7 +1782,7 @@ liveWaveform('sentLine', '#22d3ee');
   }
 
   function spawnToken() {
-    if (state.tokens.length > 7) return; // cap on screen
+    if (state.tokens.length > 4) return; // cap on screen — keeps text readable
     const type = pickType();
     const el = document.createElement('div');
     el.className = 'game-token ' + type.cls;
@@ -1744,10 +1913,10 @@ liveWaveform('sentLine', '#22d3ee');
   }
   loop();
 
-  // spawn tokens periodically
-  setInterval(spawnToken, 1100);
-  // seed a few right away
-  for (let i = 0; i < 3; i++) setTimeout(spawnToken, i * 250);
+  // spawn tokens periodically — slower so they don't crowd the page
+  setInterval(spawnToken, 1800);
+  // seed a couple right away
+  for (let i = 0; i < 2; i++) setTimeout(spawnToken, i * 400);
 
   refreshHud();
 })();
